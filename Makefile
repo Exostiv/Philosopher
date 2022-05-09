@@ -6,12 +6,12 @@
 #    By: tnicoue <tnicoue@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/07 21:50:04 by tnicoue           #+#    #+#              #
-#    Updated: 2022/05/09 11:36:22 by tnicoue          ###   ########.fr        #
+#    Updated: 2022/05/09 12:41:00 by tnicoue          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME = Philosopher
+NAME = Philo
 
 CC = gcc
 

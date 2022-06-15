@@ -6,7 +6,7 @@
 #    By: tnicoue <tnicoue@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/07 21:50:04 by tnicoue           #+#    #+#              #
-#    Updated: 2022/05/09 12:41:00 by tnicoue          ###   ########.fr        #
+#    Updated: 2022/06/14 13:08:30 by kevyn            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJECTS	= ./bin
  
 CFLAGS = -Wall -Wextra -Werror -g -pthread #-fsanitize=address
 
-SRCS = main.c
+SRCS = main.c routine.c
 
 RM = rm -f
 

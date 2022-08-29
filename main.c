@@ -6,7 +6,7 @@
 /*   By: tnicoue <tnicoue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:45:25 by tnicoue           #+#    #+#             */
-/*   Updated: 2022/06/14 15:37:35 by kevyn            ###   ########.fr       */
+/*   Updated: 2022/06/27 11:26:28 by tnicoue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	init_phil(t_mainphi *philo)
 	while (i != philo->number_of_philosophers)
 	{
 		philo->philo[i].death = philo->time_to_die;
+		philo->philo[i].remont = philo;
 		pthread_mutex_init(&philo->philo[i].fork, NULL);
 		i++;
 	}
@@ -80,8 +81,6 @@ void	pcreate(t_mainphi *philo)
 	i = 0;
 	while (i < philo->number_of_philosophers)
 	{
-		printf("ici\n");
-		printf("accees = %p\n", philo->philo[i].philo);
 		pthread_create(&philo->philo[i].philo, NULL, &routine, &philo->philo[i]);
 		philo->philo[i].numphilo = i;
 		i++;

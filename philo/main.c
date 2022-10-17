@@ -6,13 +6,13 @@
 /*   By: tnicoue <tnicoue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 09:45:25 by tnicoue           #+#    #+#             */
-/*   Updated: 2022/06/27 11:26:28 by tnicoue          ###   ########.fr       */
+/*   Updated: 2022/09/06 14:00:09 by tnicoue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int parse2(char **argv, int i)
+int	parse2(char **argv, int i)
 {
 	int	y;
 
@@ -49,61 +49,72 @@ void	init_phil(t_mainphi *philo)
 	}
 }
 
-int parse(int argc, char** argv, t_mainphi *philo)
+int	parse(int argc, char **argv, t_mainphi *philo)
 {
 	int	i;
 
 	philo->sec = init_ms();
-    if (argc < 5 || argc > 6)
+	if (argc < 5 || argc > 6)
 	{
 		printf("Il n'y a pas le bon nombre d'arguments\n");
-        return(0);
+		return (0);
 	}
 	i = 1;
 	if (parse2(argv, i) == 0)
 		return (0);
-    philo->number_of_philosophers = atoi(argv[1]);
-    philo->time_to_die = atoi(argv[2]);
-    philo->time_to_eat = atoi(argv[3]);
-    philo->time_to_sleep = atoi(argv[4]);
-    if (argc == 6)
-        philo->number_of_time_philosopher_must_eat = atoi(argv[5]);
-    else
-        philo->number_of_time_philosopher_must_eat = 0;
+	philo->finito = 0;
+	philo->chkdeath = 0;
+	philo->number_of_philosophers = atoi(argv[1]);
+	philo->time_to_die = atoi(argv[2]);
+	philo->time_to_eat = atoi(argv[3]);
+	philo->time_to_sleep = atoi(argv[4]);
+	if (argc == 6)
+		philo->number_of_time_philosopher_must_eat = atoi(argv[5]);
+	else
+		philo->number_of_time_philosopher_must_eat = 0;
 	init_phil(philo);
-    return(1);
+	return (1);
 }
 
-void	pcreate(t_mainphi *philo)
+void	pcreate(t_mainphi *p)
 {	
 	int	i;
 
 	i = 0;
-	while (i < philo->number_of_philosophers)
+	while (i < p->number_of_philosophers)
 	{
-		pthread_create(&philo->philo[i].philo, NULL, &routine, &philo->philo[i]);
-		philo->philo[i].numphilo = i;
+		pthread_create(&p->philo[i].philo, NULL, &routine, &p->philo[i]);
+		p->philo[i].numphi = i;
 		i++;
-		pthread_detach(philo->philo[i].philo);
+		pthread_detach(p->philo[i].philo);
 	}
 	i = 0;
-	while (i < philo->number_of_philosophers)
+	while (i < p->number_of_philosophers)
 	{
-		pthread_join(philo->philo[i++].philo, NULL);
+		pthread_join(p->philo[i].philo, NULL);
+		i++;
 	}
+	ft_stop_mutex(p);
 }
-int main(int argc, char* argv[])
-{
-	t_mainphi philo;
 
-    if (parse(argc, argv, &philo) == 0)
-        return(0);
-	if (atoi(argv[1]) < 2)
+int	main(int argc, char *argv[])
+{
+	t_mainphi	philo;
+
+	if (parse(argc, argv, &philo) == 0)
+		return (0);
+	if (atoi(argv[1]) == 1)
 	{
-		printf("0 1 died");
+		printf("%d 1 died\n", atoi(argv[2]));
+		return (0);
 	}
-	pthread_mutex_init(&philo.mutex, NULL);
+	if (atoi(argv[1]) == 0)
+	{
+		printf("Error no Philo\n");
+		return (0);
+	}
+	pthread_mutex_init(&philo.print, NULL);
 	pcreate(&philo);
-	pthread_mutex_destroy(&philo.mutex);
-    return 0;
+	pthread_mutex_destroy(&philo.print);
+	return (0);
 }
